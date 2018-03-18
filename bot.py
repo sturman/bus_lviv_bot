@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def start(bot, update):
-    logger.info('Start received from %s' % update.message.from_user.first_name)
+    logger.info('Start received from %s' % update.message.from_user)
     update.message.reply_text('Hi ' + update.message.from_user.first_name)
 
 
