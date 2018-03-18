@@ -14,7 +14,10 @@ logger = logging.getLogger(__name__)
 
 def start(bot, update):
     logger.info('Start received from %s' % update.message.from_user)
-    update.message.reply_text('Hi ' + update.message.from_user.first_name)
+    update.message.reply_text(
+        'Вітаю! Я допоможу Вам знайти розклад громадського транспорту Львова, '
+        'якщо ви відправите мені номер зупинки. \n '
+        'Наприклад, 216')
 
 
 def help(bot, update):
