@@ -37,7 +37,7 @@ def bus_stop_id_handler(bot, update):
     bus_stop_id = update.message.text
     resp = requests.get('https://lad.lviv.ua/api/stops/' + bus_stop_id)
     if resp.text.startswith('No stop with code'):
-        return update.message.reply_text('Зупинка з номером %s не знайдена' % bus_stop_id)
+        return update.message.reply_text('Зупинка з номером *%s* не знайдена' % bus_stop_id)
     try:
         data = resp.json()
         message_header = 'Інформація по зупинці \n' \
@@ -49,7 +49,7 @@ def bus_stop_id_handler(bot, update):
             message += '%s - %s\n' % (item['full_route_name'], item['time_left'])
         update.message.reply_markdown(message)
     except TelegramError:
-        update.message.reply_markdown('Something went wrong')
+        update.message.reply_markdown('Oops! Something went wrong')
 
 
 def main():
