@@ -1,4 +1,6 @@
 import os
+
+from telegram.error import TelegramError
 from telegram.ext import Updater, CommandHandler, RegexHandler
 import logging
 import requests
@@ -28,13 +30,19 @@ def error(bot, update, error):
 def bus_stop_id_handler(bot, update):
     logger.info('Received bus stop id %s from %s' % (update.message.text, update.message.from_user))
     bus_stop_id = update.message.text
-    data = requests.get('https://lad.lviv.ua/api/stops/' + bus_stop_id).json()
-    message_header = 'Інформація по зупинці %s "%s"' % (bus_stop_id, data['name'])
-    timetable = data['timetable']
-    message = message_header + '\n'
-    for item in timetable:
-        message += '%s - %s\n' % (item['full_route_name'], item['time_left'])
-    update.message.reply_text(message)
+    resp = requests.get('https://lad.lviv.ua/api/stops/' + bus_stop_id)
+    if resp.text.startswith('No stop with code'):
+        return update.message.reply_text('Зупинка з номером %s не знайдена' % bus_stop_id)
+    try:
+        data = resp.json()
+        message_header = 'Інформація по зупинці %s "%s"' % (bus_stop_id, data['name'])
+        timetable = data['timetable']
+        message = message_header + '\n'
+        for item in timetable:
+            message += '%s - %s\n' % (item['full_route_name'], item['time_left'])
+        update.message.reply_text(message)
+    except TelegramError:
+        update.message.reply_text('Something went wrong')
 
 
 def main():
