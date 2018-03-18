@@ -40,14 +40,16 @@ def bus_stop_id_handler(bot, update):
         return update.message.reply_text('Зупинка з номером %s не знайдена' % bus_stop_id)
     try:
         data = resp.json()
-        message_header = 'Інформація по зупинці %s "%s"' % (bus_stop_id, data['name'])
+        message_header = 'Інформація по зупинці \n' \
+                         '*%s* `"%s"`\n' \
+                         '------------------------------' % (bus_stop_id, data['name'])
         timetable = data['timetable']
         message = message_header + '\n'
         for item in timetable:
             message += '%s - %s\n' % (item['full_route_name'], item['time_left'])
-        update.message.reply_text(message)
+        update.message.reply_markdown(message)
     except TelegramError:
-        update.message.reply_text('Something went wrong')
+        update.message.reply_markdown('Something went wrong')
 
 
 def main():
