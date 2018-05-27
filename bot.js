@@ -49,9 +49,22 @@ function parseAPIResponse (busStopId, resp) {
 function parseRoutesInfo (routes) {
   let busInfo = ''
   for (let route of routes) {
-    busInfo += `${route.route} - ${route.time_left} \n`
+    busInfo += `${convertVehicleTypeToEmoji(route.vehicle_type)} ${route.route} - ${route.time_left} \n`
   }
   return busInfo
+}
+
+function convertVehicleTypeToEmoji (vehicleType) {
+  switch (vehicleType) {
+    case 'bus':
+      return '\u{1F68C}'
+    case 'tram':
+      return '\u{1F68B}'
+    case 'trol':
+      return '\u{1F68E}'
+    default:
+      return ''
+  }
 }
 
 bot.startPolling()
