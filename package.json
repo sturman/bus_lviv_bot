@@ -1,0 +1,13 @@
+{
+  "name": "bus_lviv_bot",
+  "version": "1.0.0",
+  "bugs": "https://github.com/RomanIsko/bus_lviv_bot/issues",
+  "description": "Telegram bot that provides public transport arrival time",
+  "repository": "https://github.com/RomanIsko/bus_lviv_bot",
+  "license": "MIT",
+  "dependencies": {
+    "telegraf": "^3.21.x",
+    "request": "^2.87.x",
+    "request-promise": "^4.2.x"
+  }
+}

@@ -1,1 +1,1 @@
-bot: python3 bot.py
+bot: node bot.js
