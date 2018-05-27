@@ -1,4 +1,5 @@
 const Telegraf = require('telegraf')
+const rp = require('request-promise')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.use(Telegraf.log())
@@ -16,5 +17,41 @@ bot.help((ctx) => ctx.replyWithPhoto('https://imagecdn1.luxnet.ua/zaxid/resource
   {
     caption: 'Для отримання інформації, потрібно відправити номер зупинки і я постараюсь знайти інформацію по громадському транспорту для цієї зупинки'
   }))
+
+bot.hears(/\d/, (ctx) => {
+  let busStopId = ctx.message.text
+  rp(`https://lad.lviv.ua/api/stops/${busStopId}`)
+    .then(function (resp) {
+      return ctx.replyWithMarkdown(parseAPIResponse(busStopId, resp))
+    })
+    .catch(function (err) {
+      return ctx.reply(`Упс. Щось поламалось. Спробуйте пізніше\n----------\n${err}`)
+    })
+})
+
+function parseAPIResponse (busStopId, resp) {
+  try {
+    resp = JSON.parse(resp)
+  }
+  catch (e) {
+    return e
+  }
+  let replyMarkdown = ''
+  let header = `Інформація по зупинці \n*${busStopId}* \`"${resp.name}"\`\n------------------------------\n`
+  let routes = resp.timetable
+  let busInfo = parseRoutesInfo(routes)
+
+  replyMarkdown += header
+  replyMarkdown += busInfo
+  return replyMarkdown
+}
+
+function parseRoutesInfo (routes) {
+  let busInfo = ''
+  for (let route of routes) {
+    busInfo += `${route.route} - ${route.time_left} \n`
+  }
+  return busInfo
+}
 
 bot.startPolling()
