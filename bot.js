@@ -6,7 +6,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 const logger = require('logzio-nodejs').createLogger({
   token: process.env.LOGZIO_TOKEN,
   host: 'listener.logz.io',
-  type: process.env.NODE_ENV === ('prod' || 'production') ? 'bus_lviv_bot' : 'bus_lviv_bot_dev'
+  type: process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ? 'bus_lviv_bot' : 'bus_lviv_bot_dev'
 })
 
 //register logz.io and console loggers
