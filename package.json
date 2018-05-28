@@ -6,9 +6,8 @@
   "repository": "https://github.com/RomanIsko/bus_lviv_bot",
   "license": "MIT",
   "dependencies": {
-    "logzio-nodejs": "^0.4.10",
+    "telegraf": "^3.21.x",
     "request": "^2.87.x",
-    "request-promise": "^4.2.x",
-    "telegraf": "^3.21.x"
+    "request-promise": "^4.2.x"
   }
 }
