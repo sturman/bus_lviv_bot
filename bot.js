@@ -2,7 +2,20 @@ const Telegraf = require('telegraf')
 const rp = require('request-promise')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
-bot.use(Telegraf.log())
+
+const logger = require('logzio-nodejs').createLogger({
+  token: process.env.LOGZIO_TOKEN,
+  host: 'listener.logz.io',
+  type: process.env.NODE_ENV === ('prod' || 'production') ? 'bus_lviv_bot' : 'bus_lviv_bot_' + 'dev'
+})
+
+//register logz.io and console loggers
+bot.use((ctx, next) => {
+  return next(ctx).then(() => {
+    console.log(ctx.message)
+    logger.log(ctx.message)
+  })
+})
 
 bot.telegram.getMe().then((botInfo) => {
   bot.options.username = botInfo.username
