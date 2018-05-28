@@ -33,7 +33,7 @@ bot.help((ctx) => ctx.replyWithPhoto(
   {caption: helpText}
 ))
 
-bot.hears(/\d/, (ctx) => {
+bot.hears(/^\d+$/, (ctx) => {
   let busStopId = ctx.message.text
   rp(`https://lad.lviv.ua/api/stops/${busStopId}`)
     .then(function (resp) {
