@@ -1,4 +1,5 @@
 const Telegraf = require('telegraf')
+const Extra = require('telegraf/extra')
 const rp = require('request-promise')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
@@ -37,10 +38,10 @@ bot.hears(/^\d+$/, (ctx) => {
   let busStopId = ctx.message.text
   rp(`https://lad.lviv.ua/api/stops/${busStopId}`)
     .then(function (resp) {
-      return ctx.replyWithMarkdown(prepareResponse(busStopId, resp))
+      return ctx.replyWithMarkdown(prepareResponse(busStopId, resp), Extra.inReplyTo(ctx.update.message.message_id))
     })
     .catch(function (err) {
-      return ctx.reply(`Упс. Щось поламалось. Спробуйте пізніше\n----------\n${err}`)
+      return ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.update.message.message_id))
     })
 })
 
