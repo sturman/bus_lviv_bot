@@ -54,7 +54,7 @@ bot.on('location', (ctx) => {
         closestStops.forEach(stop => {
           closestStopsMessage += `${stop.code} ${stop.name}\n`
         })
-        ctx.reply(closestStopsMessage)
+        return ctx.replyWithMarkdown(closestStopsMessage, Extra.inReplyTo(ctx.update.message.message_id))
       }
     )
     .catch(err => {
