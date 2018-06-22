@@ -57,6 +57,9 @@ bot.on('location', (ctx) => {
         ctx.reply(closestStopsMessage)
       }
     )
+    .catch(err => {
+      return ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.update.message.message_id))
+    })
 })
 
 // parse and transform API response
