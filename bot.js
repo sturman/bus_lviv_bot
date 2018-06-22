@@ -45,6 +45,20 @@ bot.hears(/^\d+$/, (ctx) => {
     })
 })
 
+bot.on('location', (ctx) => {
+  let longitude = ctx.message.location.longitude
+  let latitude = ctx.message.location.latitude
+  rp(`https://lad.lviv.ua/api/closest?longitude=${longitude}&latitude=${latitude}`, {json: true})
+    .then(closestStops => {
+        let closestStopsMessage = ''
+        closestStops.forEach(stop => {
+          closestStopsMessage += `${stop.code} ${stop.name}\n`
+        })
+        ctx.reply(closestStopsMessage)
+      }
+    )
+})
+
 // parse and transform API response
 function prepareResponse (busStopId, resp) {
   try {
