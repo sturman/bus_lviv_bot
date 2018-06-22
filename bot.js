@@ -37,10 +37,10 @@ bot.help((ctx) => ctx.replyWithPhoto(
 bot.hears(/^\d+$/, (ctx) => {
   let busStopId = ctx.message.text
   rp(`https://lad.lviv.ua/api/stops/${busStopId}`)
-    .then(function (resp) {
+    .then(resp => {
       return ctx.replyWithMarkdown(prepareResponse(busStopId, resp), Extra.inReplyTo(ctx.update.message.message_id))
     })
-    .catch(function (err) {
+    .catch(err => {
       return ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.update.message.message_id))
     })
 })
