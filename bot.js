@@ -52,9 +52,9 @@ bot.on('location', (ctx) => {
     .then(closestStops => {
         let closestStopsMessage = ''
         closestStops.forEach(stop => {
-          closestStopsMessage += `/${stop.code} ${stop.name}\n`
+          closestStopsMessage += `/${stop.code}  \u{1F449}  [${stop.name}](http://maps.google.com/maps?q=${stop.latitude},${stop.longitude})\n`
         })
-        return ctx.replyWithMarkdown(closestStopsMessage, Extra.inReplyTo(ctx.update.message.message_id))
+        return ctx.replyWithMarkdown(closestStopsMessage, Extra.inReplyTo(ctx.update.message.message_id).webPreview(false))
       }
     )
     .catch(err => {
@@ -71,7 +71,7 @@ function prepareResponse (busStopId, resp) {
     return e
   }
   let replyMarkdown = ''
-  let header = `Інформація по зупинці \n*${busStopId}* \`"${resp.name}"\`\n------------------------------\n`
+  let header = `*${busStopId}* \`"${resp.name}"\`\n------------------------------\n`
   let routes = resp.timetable
   let busInfo = parseBusInfo(routes)
 
