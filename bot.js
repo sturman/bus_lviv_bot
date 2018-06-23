@@ -34,8 +34,8 @@ bot.help((ctx) => ctx.replyWithPhoto(
   {caption: helpText}
 ))
 
-bot.hears(/^\d+$/, (ctx) => {
-  let busStopId = ctx.message.text
+bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
+  let busStopId = ctx.message.text.replace('/', '')
   rp(`https://lad.lviv.ua/api/stops/${busStopId}`)
     .then(resp => {
       return ctx.replyWithMarkdown(prepareResponse(busStopId, resp), Extra.inReplyTo(ctx.update.message.message_id))
@@ -52,7 +52,7 @@ bot.on('location', (ctx) => {
     .then(closestStops => {
         let closestStopsMessage = ''
         closestStops.forEach(stop => {
-          closestStopsMessage += `${stop.code} ${stop.name}\n`
+          closestStopsMessage += `/${stop.code} ${stop.name}\n`
         })
         return ctx.replyWithMarkdown(closestStopsMessage, Extra.inReplyTo(ctx.update.message.message_id))
       }
