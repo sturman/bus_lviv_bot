@@ -34,13 +34,30 @@ bot.help((ctx) => ctx.replyWithPhoto(
   {caption: helpText}
 ))
 
-bot.hears(/^\d+$/, (ctx) => {
-  let busStopId = ctx.message.text
+bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
+  let busStopId = ctx.message.text.replace('/', '')
   rp(`https://lad.lviv.ua/api/stops/${busStopId}`)
-    .then(function (resp) {
+    .then(resp => {
       return ctx.replyWithMarkdown(prepareResponse(busStopId, resp), Extra.inReplyTo(ctx.update.message.message_id))
     })
-    .catch(function (err) {
+    .catch(err => {
+      return ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.update.message.message_id))
+    })
+})
+
+bot.on('location', (ctx) => {
+  let longitude = ctx.message.location.longitude
+  let latitude = ctx.message.location.latitude
+  rp(`https://lad.lviv.ua/api/closest?longitude=${longitude}&latitude=${latitude}`, {json: true})
+    .then(closestStops => {
+        let closestStopsMessage = ''
+        closestStops.forEach(stop => {
+          closestStopsMessage += `/${stop.code}  \u{1F449}  [${stop.name}](http://maps.google.com/maps?q=${stop.latitude},${stop.longitude})\n`
+        })
+        return ctx.replyWithMarkdown(closestStopsMessage, Extra.inReplyTo(ctx.update.message.message_id).webPreview(false))
+      }
+    )
+    .catch(err => {
       return ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.update.message.message_id))
     })
 })
@@ -54,7 +71,7 @@ function prepareResponse (busStopId, resp) {
     return e
   }
   let replyMarkdown = ''
-  let header = `Інформація по зупинці \n*${busStopId}* \`"${resp.name}"\`\n------------------------------\n`
+  let header = `*${busStopId}* \`"${resp.name}"\`\n------------------------------\n`
   let routes = resp.timetable
   let busInfo = parseBusInfo(routes)
 
