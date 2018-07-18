@@ -37,7 +37,10 @@ bot.help((ctx) => ctx
 
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
-  rp(`https://lad.lviv.ua/api/stops/${busStopId}`)
+  rp(`https://lad.lviv.ua/api/stops/${busStopId}`, {
+    json: true,
+    headers: {'referer': `https://lad.lviv.ua/api/stops/${busStopId}`}
+  })
     .then(resp => {
       return ctx.replyWithMarkdown(prepareResponse(busStopId, resp), Extra.inReplyTo(ctx.update.message.message_id))
     })
@@ -65,12 +68,6 @@ bot.on('location', (ctx) => {
 
 // parse and transform API response
 function prepareResponse (busStopId, resp) {
-  try {
-    resp = JSON.parse(resp)
-  }
-  catch (e) {
-    return e
-  }
   let replyMarkdown = ''
   let header = `*${busStopId}* \`"${resp.name}"\`\n------------------------------\n`
   let routes = resp.timetable
