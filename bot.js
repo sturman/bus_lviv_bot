@@ -29,7 +29,14 @@ const helpText = `Для отримання інформації, потрібн
 
 Також я вмію шукати найближчі зупинки. Для цього просто відправ мені свою локацію \u{1F4CE} `
 
-bot.start((ctx) => ctx.reply(startText))
+bot.start((ctx) => {
+  try {
+    return ctx.reply(startText)
+  }
+  catch (e) {
+    console.log(e)
+  }
+})
 bot.help((ctx) => ctx
   .replyWithPhoto('https://imagecdn1.luxnet.ua/zaxid/resources/photos/news/500_DIR/201702/1418712_1458359.jpg')
   .then(ctx.replyWithMarkdown(helpText))
@@ -81,7 +88,7 @@ function prepareResponse (busStopId, resp) {
 function parseBusInfo (routes) {
   let busInfo = ''
   for (let route of routes) {
-    busInfo += `${convertVehicleTypeToEmoji(route.vehicle_type)} ${route.route} - ${route.time_left} \n`
+    busInfo += `${convertVehicleTypeToEmoji(route.vehicle_type)} ${route.route} - ${route.time_left} - \u{1F68F}\`${route.end_stop}\`\n`
   }
   return busInfo
 }
