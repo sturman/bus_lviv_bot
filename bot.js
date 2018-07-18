@@ -88,7 +88,7 @@ function prepareResponse (busStopId, resp) {
 function parseBusInfo (routes) {
   let busInfo = ''
   for (let route of routes) {
-    busInfo += `${convertVehicleTypeToEmoji(route.vehicle_type)} ${route.route} - ${route.time_left} \n`
+    busInfo += `${convertVehicleTypeToEmoji(route.vehicle_type)} ${route.route} - ${route.time_left} - \u{1F68F}\`${route.end_stop}\`\n`
   }
   return busInfo
 }
