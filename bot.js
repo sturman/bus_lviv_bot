@@ -29,7 +29,14 @@ const helpText = `Для отримання інформації, потрібн
 
 Також я вмію шукати найближчі зупинки. Для цього просто відправ мені свою локацію \u{1F4CE} `
 
-bot.start((ctx) => ctx.reply(startText))
+bot.start((ctx) => {
+  try {
+    return ctx.reply(startText)
+  }
+  catch (e) {
+    console.log(e)
+  }
+})
 bot.help((ctx) => ctx
   .replyWithPhoto('https://imagecdn1.luxnet.ua/zaxid/resources/photos/news/500_DIR/201702/1418712_1458359.jpg')
   .then(ctx.replyWithMarkdown(helpText))
