@@ -1,10 +1,22 @@
 const Telegraf = require('telegraf')
 const Extra = require('telegraf/extra')
 const rp = require('request-promise')
+const log4js = require('log4js')
+const mongoAppender = require('log4js-node-mongodb')
+
+let mongodbURI = process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'localhost:27017/bus_lviv_bot'
+
+log4js.addAppender(
+  mongoAppender.appender({
+    connectionString: mongodbURI
+  }),
+  'bus_lviv_bot_logger'
+)
+let mongoLogger = log4js.getLogger('bus_lviv_bot_logger')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
-const logger = require('logzio-nodejs').createLogger({
+const logzioLogger = require('logzio-nodejs').createLogger({
   token: process.env.LOGZIO_TOKEN,
   host: 'listener.logz.io',
   type: process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ? 'bus_lviv_bot' : 'bus_lviv_bot_dev'
@@ -13,8 +25,8 @@ const logger = require('logzio-nodejs').createLogger({
 //register logz.io and console loggers
 bot.use((ctx, next) => {
   return next(ctx).then(() => {
-    console.log(ctx.message)
-    logger.log(ctx.message)
+    logzioLogger.log(ctx.message)
+    mongoLogger.info(ctx.message)
   })
 })
 
