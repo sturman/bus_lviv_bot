@@ -44,8 +44,7 @@ const helpText = `Для отримання інформації, потрібн
 bot.start((ctx) => {
   try {
     return ctx.reply(startText)
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e)
   }
 })
@@ -58,7 +57,7 @@ bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
   rp(`https://lad.lviv.ua/api/stops/${busStopId}`, {
     json: true,
-    headers: {'referer': `https://lad.lviv.ua/api/stops/${busStopId}`}
+    headers: { 'referer': `https://lad.lviv.ua/api/stops/${busStopId}` }
   })
     .then(resp => {
       return ctx.replyWithMarkdown(prepareResponse(busStopId, resp), Extra.inReplyTo(ctx.update.message.message_id))
