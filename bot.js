@@ -28,8 +28,8 @@ const logzioLogger = require('logzio-nodejs').createLogger({
 //register logz.io and console loggers
 bot.use((ctx, next) => {
   return next(ctx).then(() => {
-    logzioLogger.log(ctx.message)
-    mongoLogger.info(ctx.message)
+    logzioLogger.log(ctx)
+    mongoLogger.info(ctx)
   })
 })
 
