@@ -107,6 +107,7 @@ function parseBusInfo (routes) {
 function convertVehicleTypeToEmoji (vehicleType) {
   switch (vehicleType) {
     case 'bus':
+    case 'marshrutka':
       return '\u{1F68C}'
     case 'tram':
       return '\u{1F68B}'
