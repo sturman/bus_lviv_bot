@@ -1,10 +1,13 @@
 const Telegraf = require('telegraf')
 const Extra = require('telegraf/extra')
+const Markup = require('telegraf/markup')
 const rp = require('request-promise')
 const log4js = require('log4js')
 const mongoAppender = require('log4js-node-mongodb')
 
 let mongodbURI = process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'localhost:27017/bus_lviv_bot'
+const apiLogin = process.env.API_LOGIN
+const apiPass = process.env.API_PASSWORD
 
 log4js.addAppender(
   mongoAppender.appender({
@@ -25,8 +28,8 @@ const logzioLogger = require('logzio-nodejs').createLogger({
 //register logz.io and console loggers
 bot.use((ctx, next) => {
   return next(ctx).then(() => {
-    logzioLogger.log(ctx.message)
-    mongoLogger.info(ctx.message)
+    logzioLogger.log(ctx)
+    mongoLogger.info(ctx)
   })
 })
 
@@ -50,7 +53,7 @@ bot.start((ctx) => {
 })
 bot.help((ctx) => ctx
   .replyWithPhoto('https://imagecdn1.luxnet.ua/zaxid/resources/photos/news/500_DIR/201702/1418712_1458359.jpg')
-  .then(ctx.replyWithMarkdown(helpText))
+  .then(() => {return ctx.replyWithMarkdown(helpText)})
 )
 
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
@@ -68,19 +71,54 @@ bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
 })
 
 bot.on('location', (ctx) => {
-  let longitude = ctx.message.location.longitude
-  let latitude = ctx.message.location.latitude
-  rp(`https://lad.lviv.ua/api/closest?longitude=${longitude}&latitude=${latitude}`, {json: true})
-    .then(closestStops => {
-        let closestStopsMessage = ''
-        closestStops.forEach(stop => {
-          closestStopsMessage += `/${stop.code}  \u{1F449}  [${stop.name}](http://maps.google.com/maps?q=${stop.latitude},${stop.longitude})\n`
-        })
-        return ctx.replyWithMarkdown(closestStopsMessage, Extra.inReplyTo(ctx.update.message.message_id).webPreview(false))
-      }
-    )
-    .catch(err => {
-      return ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.update.message.message_id))
+  let requestOptions = {
+    uri: 'https://api.eway.in.ua/',
+    qs: {
+      login: apiLogin,
+      password: apiPass,
+      city: 'lviv',
+      function: 'stops.GetStopsNearPoint',
+      lat: ctx.message.location.latitude,
+      lng: ctx.message.location.longitude
+    },
+    json: true
+  }
+
+  rp(requestOptions)
+    .then(closestStopsRes => {
+      let closestStopsKeyboard = []
+      closestStopsRes.stop.forEach(stop => {
+        closestStopsKeyboard.push(Markup.callbackButton(stop.title, stop.id))
+      })
+      return ctx.reply('Найближчі зупинки:', Extra.markup((m) => m.inlineKeyboard(closestStopsKeyboard, { wrap: () => true })))
+    })
+})
+
+bot.on('callback_query', (ctx) => {
+  let busStopId = ctx.callbackQuery.data
+  let requestOptions = {
+    uri: 'https://api.eway.in.ua/',
+    qs: {
+      login: apiLogin,
+      password: apiPass,
+      city: 'lviv',
+      v: 1.2,
+      function: 'stops.GetStopInfo',
+      id: busStopId
+    },
+    json: true
+  }
+
+  rp(requestOptions)
+    .then(res => {
+      let routes = res.routes
+      let message = `\`${res.title}\` [link](http://maps.google.com/maps?q=${res.lat},${res.lng})\n`
+      routes.forEach(route => {
+        if (route.timeSource === 'gps') {
+          message += `${convertVehicleTypeToEmoji(route.transportKey)} ${route.title} - ${route.timeLeftFormatted}. \u{1F68F}\`${route.directionTitle}\`\n`
+        }
+      })
+      return ctx.replyWithMarkdown(message, { disable_web_page_preview: true })
     })
 })
 
@@ -107,6 +145,7 @@ function parseBusInfo (routes) {
 function convertVehicleTypeToEmoji (vehicleType) {
   switch (vehicleType) {
     case 'bus':
+    case 'marshrutka':
       return '\u{1F68C}'
     case 'tram':
       return '\u{1F68B}'
