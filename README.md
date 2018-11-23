@@ -6,6 +6,10 @@
 
 `BOT_TOKEN` - telegram bot token
 
+`API_LOGIN` - transport API login
+
+`API_PASSWORD` - transport API password
+
 `LOGZIO_TOKEN` - logging [logz.io](https://logz.io/) token
 
 `MONGODB_URI` - MongoDB URI for messages logging
