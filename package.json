@@ -7,9 +7,9 @@
   "license": "MIT",
   "dependencies": {
     "log4js-node-mongodb": "^2.2.x",
-    "logzio-nodejs": "^1.0.1",
+    "logzio-nodejs": "^1.0.4",
     "request": "^2.88.x",
     "request-promise": "^4.2.x",
-    "telegraf": "^3.25.x"
+    "telegraf": "^3.27.x"
   }
 }
