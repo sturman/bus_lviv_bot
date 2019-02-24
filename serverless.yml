@@ -7,6 +7,8 @@ provider:
 functions:
   bot:
     handler: serverless_bot.handler
+    environment:
+      BOT_TOKEN: ${ssm:bus_lviv_bot_token}
     events:
       - http:
           path: bot
