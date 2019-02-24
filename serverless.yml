@@ -1,0 +1,13 @@
+service: bus-lviv-bot
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: production
+
+functions:
+  bot:
+    handler: serverless_bot.start
+    events:
+      - http:
+          path: bot
+          method: any
