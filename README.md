@@ -13,3 +13,6 @@
 `LOGZIO_TOKEN` - logging [logz.io](https://logz.io/) token
 
 `MONGODB_URI` - MongoDB URI for messages logging
+
+### Serverless
+* add token to parameters store `aws ssm put-parameter --name "bus_lviv_bot_token" --type "String" --value "<TOKEN>"`
