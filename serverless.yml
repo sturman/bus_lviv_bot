@@ -6,7 +6,7 @@ provider:
 
 functions:
   bot:
-    handler: serverless_bot.start
+    handler: serverless_bot.handler
     events:
       - http:
           path: bot
