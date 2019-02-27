@@ -5,6 +5,7 @@ const rp = require('request-promise')
 const log4js = require('log4js')
 const mongoAppender = require('log4js-node-mongodb')
 const startMiddleware = require('./middlewares/start')
+const helpMiddleware = require('./middlewares/help')
 
 let mongodbURI = process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'localhost:27017/bus_lviv_bot'
 const apiLogin = process.env.API_LOGIN
@@ -39,11 +40,7 @@ bot.telegram.getMe().then((botInfo) => {
 })
 
 bot.start(startMiddleware)
-
-bot.help((ctx) => ctx
-  .replyWithPhoto('https://imagecdn1.luxnet.ua/zaxid/resources/photos/news/500_DIR/201702/1418712_1458359.jpg')
-  .then(() => {return ctx.replyWithMarkdown(helpText)})
-)
+bot.help(helpMiddleware)
 
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
