@@ -4,6 +4,7 @@ const Markup = require('telegraf/markup')
 const rp = require('request-promise')
 const log4js = require('log4js')
 const mongoAppender = require('log4js-node-mongodb')
+const startMiddleware = require('./middlewares/start')
 
 let mongodbURI = process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'localhost:27017/bus_lviv_bot'
 const apiLogin = process.env.API_LOGIN
@@ -37,20 +38,8 @@ bot.telegram.getMe().then((botInfo) => {
   bot.options.username = botInfo.username
 })
 
-const startText =
-  'Вітаю! Я допоможу Вам знайти розклад громадського транспорту Львова, якщо ви відправите мені номер зупинки. \n ' +
-  'Наприклад, 216'
-const helpText = `Для отримання інформації, потрібно відправити номер зупинки і я постараюсь знайти інформацію по громадському транспорту для цієї зупинки.
+bot.start(startMiddleware)
 
-Також я вмію шукати найближчі зупинки. Для цього просто відправ мені свою локацію \u{1F4CE} `
-
-bot.start((ctx) => {
-  try {
-    return ctx.reply(startText)
-  } catch (e) {
-    console.log(e)
-  }
-})
 bot.help((ctx) => ctx
   .replyWithPhoto('https://imagecdn1.luxnet.ua/zaxid/resources/photos/news/500_DIR/201702/1418712_1458359.jpg')
   .then(() => {return ctx.replyWithMarkdown(helpText)})
