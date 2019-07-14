@@ -2,17 +2,13 @@
 
 ### Environment variables
 
-`NODE_ENV` - use `prod` or `production` for production mode. Use any other value for development mode
+`BOT_TOKEN` - Telegram bot token
 
-`BOT_TOKEN` - telegram bot token
+`API_LOGIN` - EasyWay API login
 
-`API_LOGIN` - transport API login
-
-`API_PASSWORD` - transport API password
-
-`LOGZIO_TOKEN` - logging [logz.io](https://logz.io/) token
-
-`MONGODB_URI` - MongoDB URI for messages logging
+`API_PASSWORD` - EasyWay API password
 
 ### Serverless
-* add token to parameters store `aws ssm put-parameter --name "bus_lviv_bot_token" --type "String" --value "<TOKEN>"`
+* add token to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_token" --type "String" --value "<TOKEN>"`
+* add token to EasyWay API login to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_api_login" --type "String" --value "<TOKEN>"`
+* add token to EasyWay API password to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_api_password" --type "String" --value "<TOKEN>"`
