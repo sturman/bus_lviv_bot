@@ -9,6 +9,8 @@ functions:
     handler: serverless_bot.handler
     environment:
       BOT_TOKEN: ${ssm:bus_lviv_bot_token}
+      API_LOGIN: ${ssm:bus_lviv_bot_api_login}
+      API_PASSWORD: ${ssm:bus_lviv_bot_api_password}
     events:
       - http:
           path: bot
