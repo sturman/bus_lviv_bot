@@ -127,9 +127,7 @@ function convertVehicleTypeToEmoji (vehicleType) {
 
 exports.handler = (event, context, callback) => {
   const body = JSON.parse(event.body) // get data passed to us
-  console.log('--------------')
   console.log(body)
-  console.log('--------------')
 
   bot.handleUpdate(body)
   return callback(null, {
