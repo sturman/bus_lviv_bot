@@ -1,15 +1,13 @@
 {
   "name": "bus_lviv_bot",
-  "version": "1.2.1",
-  "bugs": "https://github.com/RomanIsko/bus_lviv_bot/issues",
+  "version": "2.1.2",
+  "bugs": "https://github.com/sturman/bus_lviv_bot/issues",
   "description": "Telegram bot that provides public transport arrival time",
-  "repository": "https://github.com/RomanIsko/bus_lviv_bot",
+  "repository": "https://github.com/sturman/bus_lviv_bot",
   "license": "MIT",
   "dependencies": {
-    "log4js-node-mongodb": "^2.2.x",
-    "logzio-nodejs": "^1.0.4",
     "request": "^2.88.x",
     "request-promise": "^4.2.x",
-    "telegraf": "^3.27.x"
+    "telegraf": "^3.30.x"
   }
 }
