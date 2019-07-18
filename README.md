@@ -12,3 +12,12 @@
 * add token to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_token" --type "String" --value "<TOKEN>"`
 * add token to EasyWay API login to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_api_login" --type "String" --value "<TOKEN>"`
 * add token to EasyWay API password to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_api_password" --type "String" --value "<TOKEN>"`
+
+------------
+Built with
+
+<a href="https://serverless.com"> <img src="http://public.serverless.com/badges/v1.svg"></a>
+
+[telegraf.js](https://github.com/telegraf/telegraf)
+
+[AWS Lambda](https://aws.amazon.com/lambda/)

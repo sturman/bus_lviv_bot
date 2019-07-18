@@ -6,7 +6,7 @@ provider:
 
 functions:
   bot:
-    handler: serverless_bot.handler
+    handler: bot.handler
     environment:
       BOT_TOKEN: ${ssm:bus_lviv_bot_token}
       API_LOGIN: ${ssm:bus_lviv_bot_api_login}
