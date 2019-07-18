@@ -5,9 +5,15 @@
   "description": "Telegram bot that provides public transport arrival time",
   "repository": "https://github.com/sturman/bus_lviv_bot",
   "license": "MIT",
+  "scripts": {
+    "deploy": "sls deploy"
+  },
   "dependencies": {
     "request": "^2.88.x",
     "request-promise": "^4.2.x",
     "telegraf": "^3.30.x"
+  },
+  "devDependencies": {
+    "serverless": "^1.47.x"
   }
 }
