@@ -90,7 +90,7 @@ bot.on('callback_query', (ctx) => {
       ctx.replyWithMarkdown(message,
         Markup.inlineKeyboard([
           Markup.callbackButton('Оновити дані', busStopId),
-        ]).extra())
+        ]).extra({ disable_web_page_preview: true }))
     })
 })
 
