@@ -87,7 +87,10 @@ bot.on('callback_query', (ctx) => {
           message += `${convertVehicleTypeToEmoji(route.transportKey)} ${route.title} - ${route.timeLeftFormatted}. \u{1F68F}\`${route.directionTitle}\`\n`
         }
       })
-      ctx.replyWithMarkdown(message, { disable_web_page_preview: true })
+      ctx.replyWithMarkdown(message,
+        Markup.inlineKeyboard([
+          Markup.callbackButton('Оновити дані', busStopId),
+        ]).extra())
     })
 })
 
