@@ -81,7 +81,7 @@ bot.on('callback_query', (ctx) => {
   rp(requestOptions)
     .then(res => {
       let routes = res.routes
-      let message = `\`${res.title}\` [link](http://maps.google.com/maps?q=${res.lat},${res.lng})\n`
+      let message = `\`${res.title}\` [gmaps](http://maps.google.com/maps?q=${res.lat},${res.lng})\n`
       routes.forEach(route => {
         if (route.timeSource === 'gps') {
           message += `${convertVehicleTypeToEmoji(route.transportKey)} ${route.title} - ${route.timeLeftFormatted}. \u{1F68F}\`${route.directionTitle}\`\n`
