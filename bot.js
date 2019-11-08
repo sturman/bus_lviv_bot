@@ -32,7 +32,7 @@ bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
     headers: { 'referer': `https://lad.lviv.ua/api/stops/${busStopId}` }
   })
     .then(resp => {
-      ctx.replyWithMarkdown(prepareResponse(busStopId, resp), Extra.inReplyTo(ctx.message.message_id))
+      ctx.replyWithMarkdown(prepareResponse(busStopId, resp) + `\n/${busStopId}`, Extra.inReplyTo(ctx.message.message_id))
     })
     .catch(err => {
       ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.message.message_id))
