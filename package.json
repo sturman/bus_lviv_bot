@@ -11,9 +11,9 @@
   "dependencies": {
     "request": "^2.88.x",
     "request-promise": "^4.2.x",
-    "telegraf": "^3.32.x"
+    "telegraf": "^3.33.x"
   },
   "devDependencies": {
-    "serverless": "^1.50.x"
+    "serverless": "^1.57.x"
   }
 }
