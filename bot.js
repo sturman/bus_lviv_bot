@@ -8,9 +8,11 @@ const bot = new Telegraf(botToken)
 
 const startMiddleware = require('./middleware/start.middleware')
 const helpMiddleware = require('./middleware/help.middleware')
+const locationMiddleware = require('./middleware/location.middleware')
 
 bot.start(startMiddleware)
 bot.help(helpMiddleware)
+bot.on('location', locationMiddleware)
 
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
@@ -23,30 +25,6 @@ bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
     })
     .catch(err => {
       ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.message.message_id))
-    })
-})
-
-bot.on('location', (ctx) => {
-  let requestOptions = {
-    uri: 'https://api.eway.in.ua/',
-    qs: {
-      login: apiLogin,
-      password: apiPass,
-      city: 'lviv',
-      function: 'stops.GetStopsNearPoint',
-      lat: ctx.message.location.latitude,
-      lng: ctx.message.location.longitude
-    },
-    json: true
-  }
-
-  rp(requestOptions)
-    .then(closestStopsRes => {
-      let closestStopsKeyboard = []
-      closestStopsRes.stop.forEach(stop => {
-        closestStopsKeyboard.push(Markup.callbackButton(stop.title, stop.id))
-      })
-      ctx.reply('Найближчі зупинки:', Extra.markup((m) => m.inlineKeyboard(closestStopsKeyboard, { wrap: () => true })))
     })
 })
 
