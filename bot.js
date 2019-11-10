@@ -6,19 +6,9 @@ const { botToken, apiLogin, apiPass } = require('./config/config')
 
 const bot = new Telegraf(botToken)
 
-Також я вмію шукати найближчі зупинки. Для цього просто відправ мені свою локацію через \u{1F4CE} або через кнопку після виконання команди /start`
+const startMiddleware = require('./middleware/start.middleware')
 
-bot.start((ctx) => {
-  const keyboard = Markup.resize().keyboard([
-    Markup.locationRequestButton('\u{1F4CC} Відправити локацію')
-  ])
-  ctx.reply(startText, Extra.markup(keyboard).markdown())
-})
-
-bot.help((ctx) => ctx
-  .replyWithPhoto('https://imagecdn1.luxnet.ua/zaxid/resources/photos/news/500_DIR/201702/1418712_1458359.jpg')
-  .then(() => ctx.replyWithMarkdown(helpText))
-)
+bot.start(startMiddleware)
 
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
