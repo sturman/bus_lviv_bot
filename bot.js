@@ -2,14 +2,9 @@ const Telegraf = require('telegraf')
 const Extra = require('telegraf/extra')
 const Markup = require('telegraf/markup')
 const rp = require('request-promise')
+const { botToken, apiLogin, apiPass } = require('./config/config')
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
-const apiLogin = process.env.API_LOGIN
-const apiPass = process.env.API_PASSWORD
-
-const startText =
-  'Вітаю! Я допоможу Вам знайти розклад громадського транспорту Львова, якщо ви відправите мені номер зупинки, наприклад 216, або свою локацію і я знайду найближчі зупинки'
-const helpText = `Для отримання інформації, потрібно відправити номер зупинки і я постараюсь знайти інформацію по громадському транспорту для цієї зупинки.
+const bot = new Telegraf(botToken)
 
 Також я вмію шукати найближчі зупинки. Для цього просто відправ мені свою локацію через \u{1F4CE} або через кнопку після виконання команди /start`
 
