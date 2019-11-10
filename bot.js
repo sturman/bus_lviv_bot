@@ -7,8 +7,10 @@ const { botToken, apiLogin, apiPass } = require('./config/config')
 const bot = new Telegraf(botToken)
 
 const startMiddleware = require('./middleware/start.middleware')
+const helpMiddleware = require('./middleware/help.middleware')
 
 bot.start(startMiddleware)
+bot.help(helpMiddleware)
 
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
