@@ -24,7 +24,10 @@ bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
       ctx.replyWithMarkdown(prepareResponse(busStopId, resp) + `\n/${busStopId}`, Extra.inReplyTo(ctx.message.message_id))
     })
     .catch(err => {
-      ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.message.message_id))
+      if (err.statusCode === 400) {
+        return ctx.reply(`Отримано помилку від джерела даних. Ймовірно зупинки з номером ${busStopId} не існує\n----------\n${err}`, Extra.inReplyTo(ctx.message.message_id))
+      }
+      return ctx.reply(`Упс. Щось поламалось. Отримано помилку від джерела даних\n----------\n${err}`, Extra.inReplyTo(ctx.message.message_id))
     })
 })
 
