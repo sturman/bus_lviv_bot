@@ -16,7 +16,7 @@ bot.on('location', locationMiddleware)
 
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
-  rp(`https://lad.lviv.ua/api/stops/${busStopId}`, {
+  rp(`https://api.lad.lviv.ua/stops/${busStopId}`, {
     json: true,
     headers: { 'referer': `https://lad.lviv.ua/api/stops/${busStopId}` }
   })
