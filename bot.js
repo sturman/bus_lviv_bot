@@ -14,6 +14,10 @@ bot.start(startMiddleware)
 bot.help(helpMiddleware)
 bot.on('location', locationMiddleware)
 
+bot.catch((err, ctx) => {
+  console.log(`Ooops, encountered an error for ${ctx.updateType}`, err)
+})
+
 bot.hears(/(^\d+$)|(^\/\d+$)/, (ctx) => {
   let busStopId = ctx.message.text.replace('/', '')
   rp(`https://api.lad.lviv.ua/stops/${busStopId}`, {
