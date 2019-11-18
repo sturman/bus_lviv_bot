@@ -6,9 +6,9 @@ provider:
   environment:
     NODE_ENV: ${self:provider.stage}
 
-custom:
-  serverless-ssm-provider:
-    file: .env
+#custom:
+#  serverless-ssm-provider:
+#    file: .env
 
 functions:
   bot:
@@ -22,5 +22,5 @@ functions:
           path: bot
           method: post
 plugins:
-  - serverless-ssm-provider
+#  - serverless-ssm-provider
   - serverless-offline
