@@ -6,7 +6,9 @@
   "repository": "https://github.com/sturman/bus_lviv_bot",
   "license": "MIT",
   "scripts": {
-    "deploy": "sls deploy"
+    "deploy": "sls deploy --stage production",
+    "dev": "sls offline",
+    "localtunnel": "node localtunnel.js"
   },
   "dependencies": {
     "request": "^2.88.x",
@@ -14,6 +16,10 @@
     "telegraf": "^3.33.x"
   },
   "devDependencies": {
-    "serverless": "^1.57.x"
+    "localtunnel": "^2.0.0",
+    "serverless": "^1.57.x",
+    "serverless-offline": "^5.12.0",
+    "serverless-ssm-provider": "^1.1.1",
+    "dotenv": "^8.2.0"
   }
 }
