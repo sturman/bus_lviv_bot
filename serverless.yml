@@ -2,7 +2,13 @@ service: bus-lviv-bot
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: production
+  stage: ${opt:stage, 'development'}
+  environment:
+    NODE_ENV: ${self:provider.stage}
+
+custom:
+  serverless-ssm-provider:
+    file: .env
 
 functions:
   bot:
@@ -15,3 +21,6 @@ functions:
       - http:
           path: bot
           method: post
+plugins:
+  - serverless-ssm-provider
+  - serverless-offline
