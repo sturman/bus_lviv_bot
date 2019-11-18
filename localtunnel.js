@@ -1,10 +1,9 @@
-const localtunnel = require('localtunnel')
-require('dotenv').config();
+const localtunnel = require('localtunnel');
 
 (async () => {
   const tunnel = await localtunnel({ port: 3000 })
 
-  console.log(`https://api.telegram.org/bot${process.env.bus_lviv_bot_token}/setWebhook?url=${tunnel.url}/bot`)
+  console.log(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/setWebhook?url=${tunnel.url}/bot`)
 
   tunnel.on('close', () => {
     // tunnels are closed

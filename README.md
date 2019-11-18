@@ -14,9 +14,7 @@
 * add token to EasyWay API password to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_api_password" --type "String" --value "<TOKEN>"`
 
 ### Development
-1. Copy `.example.env` in `.env` file
-1. Set environment variables in `.env` file
-1. Run `localtunnel` npm script
+1. Run `localtunnel` npm script with `BOT_TOKEN` environment variable set
 1. Set webhook for Telegram Bot by navigating to URL from output in previous step
 1. Run `dev` npm script
 

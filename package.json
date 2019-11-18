@@ -18,8 +18,6 @@
   "devDependencies": {
     "localtunnel": "^2.0.0",
     "serverless": "^1.57.x",
-    "serverless-offline": "^5.12.0",
-    "serverless-ssm-provider": "^1.1.1",
-    "dotenv": "^8.2.0"
+    "serverless-offline": "^5.12.0"
   }
 }

@@ -6,21 +6,16 @@ provider:
   environment:
     NODE_ENV: ${self:provider.stage}
 
-#custom:
-#  serverless-ssm-provider:
-#    file: .env
-
 functions:
   bot:
     handler: bot.handler
     environment:
-      BOT_TOKEN: ${ssm:bus_lviv_bot_token}
-      API_LOGIN: ${ssm:bus_lviv_bot_api_login}
-      API_PASSWORD: ${ssm:bus_lviv_bot_api_password}
+      BOT_TOKEN: ${ssm:bus_lviv_bot_token, env:BOT_TOKEN}
+      API_LOGIN: ${ssm:bus_lviv_bot_api_login, env:API_LOGIN}
+      API_PASSWORD: ${ssm:bus_lviv_bot_api_password, env:API_PASSWORD}
     events:
       - http:
           path: bot
           method: post
 plugins:
-#  - serverless-ssm-provider
   - serverless-offline
