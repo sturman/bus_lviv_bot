@@ -13,17 +13,17 @@
 * add token to EasyWay API login to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_api_login" --type "String" --value "<TOKEN>"`
 * add token to EasyWay API password to AWS Parameters Store `aws ssm put-parameter --name "bus_lviv_bot_api_password" --type "String" --value "<TOKEN>"`
 
-------------
-Built with
-
-<a href="https://serverless.com"> <img src="http://public.serverless.com/badges/v1.svg"></a>
-
 ### Development
 1. Copy `.example.env` in `.env` file
 1. Set environment variables in `.env` file
 1. Run `localtunnel` npm script
 1. Set webhook for Telegram Bot by navigating to URL from output in previous step
 1. Run `dev` npm script
+
+------------
+Built with
+
+<a href="https://serverless.com"> <img src="http://public.serverless.com/badges/v1.svg"></a>
 
 [telegraf.js](https://github.com/telegraf/telegraf)
 
