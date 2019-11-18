@@ -18,6 +18,13 @@ Built with
 
 <a href="https://serverless.com"> <img src="http://public.serverless.com/badges/v1.svg"></a>
 
+### Development
+1. Copy `.example.env` in `.env` file
+1. Set environment variables in `.env` file
+1. Run `localtunnel` npm script
+1. Set webhook for Telegram Bot by navigating to URL from output in previous step
+1. Run `dev` npm script
+
 [telegraf.js](https://github.com/telegraf/telegraf)
 
 [AWS Lambda](https://aws.amazon.com/lambda/)
