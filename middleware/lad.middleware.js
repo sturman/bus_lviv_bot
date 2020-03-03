@@ -6,7 +6,7 @@ module.exports = (ctx, next) => {
   let busStopId = ctx.message.text.replace('/', '')
   rp(`https://api.lad.lviv.ua/stops/${busStopId}`, {
     json: true,
-    headers: { 'referer': `https://lad.lviv.ua/api/stops/${busStopId}` }
+    referer: `https://lad.lviv.ua/api/stops/${busStopId}`
   })
     .then(resp => {
       return ctx.replyWithMarkdown(prepareResponse(busStopId, resp) + `\n/${busStopId}`, Extra.inReplyTo(ctx.message.message_id))
