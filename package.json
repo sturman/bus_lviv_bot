@@ -13,11 +13,11 @@
   "dependencies": {
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
-    "telegraf": "^3.36.0"
+    "telegraf": "^3.38.0"
   },
   "devDependencies": {
     "localtunnel": "^2.0.0",
-    "serverless": "^1.65.0",
-    "serverless-offline": "^5.12.1"
+    "serverless": "^1.69.0",
+    "serverless-offline": "^6.1.5"
   }
 }
