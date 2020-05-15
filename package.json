@@ -1,6 +1,6 @@
 {
   "name": "bus_lviv_bot",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "bugs": "https://github.com/sturman/bus_lviv_bot/issues",
   "description": "Telegram bot that provides public transport arrival time",
   "repository": "https://github.com/sturman/bus_lviv_bot",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "localtunnel": "^2.0.0",
-    "serverless": "^1.69.0",
+    "serverless": "^1.71.0",
     "serverless-offline": "^6.1.5"
   }
 }
