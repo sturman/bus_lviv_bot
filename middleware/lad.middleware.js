@@ -4,7 +4,7 @@ const convertVehicleTypeToEmoji = require('../utils/vehicleTypeConverter')
 
 module.exports = (ctx, next) => {
   let busStopId = ctx.message.text.replace('/', '')
-  rp(`https://api1.lad.lviv.ua/stops/${busStopId}`, {
+  rp(`https://api.lad.lviv.ua/stops/${busStopId}`, {
     json: true,
     referer: `https://lad.lviv.ua/api/stops/${busStopId}`
   })
