@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "request": "^2.88.2",
-    "request-promise": "^4.2.5",
+    "request-promise": "^4.2.6",
     "telegraf": "^3.38.0"
   },
   "devDependencies": {
     "localtunnel": "^2.0.0",
-    "serverless": "^1.74.1",
-    "serverless-offline": "^6.4.0"
+    "serverless": "^2.8.0",
+    "serverless-offline": "^6.8.0"
   }
 }
