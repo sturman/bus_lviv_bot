@@ -18,6 +18,6 @@
   "devDependencies": {
     "localtunnel": "^2.0.1",
     "serverless": "^2.22.0",
-    "serverless-offline": "^6.8.0"
+    "serverless-offline": "^12.0.3"
   }
 }
