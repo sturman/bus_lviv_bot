@@ -16,7 +16,7 @@
     "telegraf": "^3.38.0"
   },
   "devDependencies": {
-    "localtunnel": "^2.0.1",
+    "localtunnel": "^2.0.2",
     "serverless": "^2.22.0",
     "serverless-offline": "^12.0.4"
   }
