@@ -1,7 +1,7 @@
 service: bus-lviv-bot
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   stage: ${opt:stage, 'development'}
   environment:
     NODE_ENV: ${self:provider.stage}
