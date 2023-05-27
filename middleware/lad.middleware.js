@@ -2,14 +2,18 @@ const rp = require('request-promise')
 const Extra = require('telegraf/extra')
 const convertVehicleTypeToEmoji = require('../utils/vehicleTypeConverter')
 
+const apiUrl = 'http://0.0.0.0:8080'
+
 module.exports = (ctx, next) => {
   let busStopId = ctx.message.text.replace('/', '')
-  rp(`https://api.lad.lviv.ua/stops/${busStopId}`, {
+  rp(`${apiUrl}/stops/${busStopId}/timetable`, {
     json: true,
     referer: `https://lad.lviv.ua/api/stops/${busStopId}`
   })
-    .then(resp => {
-      return ctx.replyWithMarkdown(prepareResponse(busStopId, resp) + `\n/${busStopId}`, Extra.inReplyTo(ctx.message.message_id))
+    .then(async resp => {
+      return ctx.replyWithMarkdown(await prepareResponse(busStopId, resp) + `\n/${busStopId}`, Extra.inReplyTo(ctx.message.message_id)).catch(err => {
+        console.log(err)
+      })
     })
     .catch(err => {
       if (err.statusCode === 400) {
@@ -20,11 +24,11 @@ module.exports = (ctx, next) => {
 }
 
 // parse and transform API response
-const prepareResponse = (busStopId, resp) => {
+const prepareResponse = async (busStopId, resp) => {
   let replyMarkdown = ''
-  let header = `*${busStopId}* \`"${resp.name}"\`\n------------------------------\n`
-  let routes = resp.timetable
-  let busInfo = parseBusInfo(routes)
+  let stopName = await getStopName(busStopId)
+  let header = `*${busStopId}* \`"${stopName}"\`\n------------------------------\n`
+  let busInfo = parseBusInfo(resp)
 
   replyMarkdown += header
   replyMarkdown += busInfo
@@ -37,4 +41,9 @@ const parseBusInfo = (routes) => {
     busInfo += `${convertVehicleTypeToEmoji(route.vehicle_type)} ${route.route} - ${route.time_left} - \u{1F68F}\`${route.end_stop}\`\n`
   }
   return busInfo
+}
+
+const getStopName = async (stopId) => {
+  const response = await fetch(`${apiUrl}/stops/${stopId}`).then(response => response.json());
+  return response.name
 }
