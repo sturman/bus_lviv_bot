@@ -1,5 +1,9 @@
 # [bus_lviv_bot](https://t.me/bus_lviv_bot)
 
+### This project is no longer supported.
+### Please use [bus-lviv-bot](https://github.com/sturman/bus-lviv-bot/) repository
+
+----
 ### Environment variables
 
 `BOT_TOKEN` - Telegram bot token
